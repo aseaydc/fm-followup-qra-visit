@@ -10,11 +10,11 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            padding: 30px;
             min-height: 100vh;
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
@@ -24,10 +24,10 @@
         .header {
             background: linear-gradient(135deg, #7fa8c9 0%, #a8c5e0 100%);
             color: white;
-            padding: 30px;
+            padding: 40px;
             text-align: center;
         }
-        .header h1 { font-size: 28px; margin-bottom: 5px; color: #2c3e50; }
+        .header h1 { font-size: 28px; margin-bottom: 8px; color: #2c3e50; }
         .header p { font-size: 14px; opacity: 0.9; color: #2c3e50; }
         .logo-img {
             max-width: 150px;
@@ -38,8 +38,8 @@
         }
         .controls {
             display: flex;
-            gap: 10px;
-            padding: 20px;
+            gap: 12px;
+            padding: 25px;
             background: #f8f9fa;
             border-bottom: 1px solid #dee2e6;
             flex-wrap: wrap;
@@ -66,10 +66,10 @@
         .btn-warning:hover { background: #e0a800; }
         .btn-info { background: #17a2b8; color: white; }
         .btn-info:hover { background: #138496; }
-        #content { padding: 30px; }
+        #content { padding: 40px; }
         .section {
-            margin-bottom: 30px;
-            padding: 25px;
+            margin-bottom: 35px;
+            padding: 30px;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             background: #fafafa;
@@ -78,25 +78,25 @@
             font-size: 20px;
             font-weight: 700;
             color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
             border-bottom: 2px solid #667eea;
         }
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 20px;
+            margin-bottom: 20px;
         }
-        .form-group { display: flex; flex-direction: column; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 5px; }
         label {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #495057;
             font-size: 14px;
         }
         input[type="text"], input[type="date"], input[type="number"], select, textarea {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ced4da;
             border-radius: 4px;
             font-size: 14px;
@@ -110,8 +110,8 @@
         
         .treatment-item {
             background: white;
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
             border-radius: 8px;
             border-left: 4px solid #667eea;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -123,9 +123,9 @@
         .treatment-header {
             display: grid;
             grid-template-columns: 2fr 1fr auto auto;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .treatment-header h3 {
             font-size: 18px;
@@ -134,7 +134,7 @@
         }
         .priority-badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
@@ -145,23 +145,23 @@
         
         .treatment-products {
             display: grid;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
+            margin-top: 15px;
         }
         .product-line {
             display: grid;
             grid-template-columns: 2fr 1fr auto;
-            gap: 10px;
+            gap: 15px;
             align-items: center;
             background: #f8f9fa;
-            padding: 10px;
+            padding: 12px 15px;
             border-radius: 4px;
         }
         .product-name { font-weight: 600; color: #495057; }
         .product-dosage { color: #6c757d; font-size: 14px; }
         
         .edit-btn, .delete-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -175,28 +175,28 @@
         
         .add-treatment-form {
             background: #e8f4f8;
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         .add-treatment-form.report-mode { display: none; }
         
         .product-inputs {
             display: grid;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
         .product-input-row {
             display: grid;
             grid-template-columns: 2fr 1fr auto;
-            gap: 10px;
+            gap: 12px;
         }
         
         .info-banner {
             background: #d1ecf1;
             border-left: 4px solid #0c5460;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 18px;
+            margin-bottom: 25px;
             border-radius: 4px;
             color: #0c5460;
             font-size: 14px;
@@ -204,14 +204,14 @@
         .visit-info {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 18px;
+            margin-bottom: 25px;
             border-radius: 4px;
         }
         .visit-info strong { color: #856404; }
         .signature-box {
             background: white;
-            padding: 15px;
+            padding: 20px;
             border: 1px solid #ced4da;
             border-radius: 4px;
             min-height: 80px;
@@ -227,8 +227,8 @@
         .report-banner {
             background: #d4edda;
             border: 2px solid #28a745;
-            padding: 15px;
-            margin: 20px;
+            padding: 20px;
+            margin: 25px;
             border-radius: 8px;
             text-align: center;
             display: none;
@@ -250,17 +250,17 @@
         .modal.active { display: flex; align-items: center; justify-content: center; }
         .modal-content {
             background: white;
-            padding: 30px;
+            padding: 35px;
             border-radius: 12px;
-            max-width: 600px;
+            max-width: 650px;
             width: 90%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
         .modal-header {
             font-size: 20px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #2c3e50;
         }
         
@@ -326,12 +326,12 @@
                 <div id="treatmentsList"></div>
                 
                 <div class="add-treatment-form" id="addTreatmentForm">
-                    <h3 style="margin-bottom: 15px; color: #2c3e50; font-size: 16px;">Add Finding & Treatment</h3>
+                    <h3 style="margin-bottom: 20px; color: #2c3e50; font-size: 16px;">Add Finding & Treatment</h3>
                     <div class="form-group">
                         <label for="areaName">Area of Involvement / Finding *</label>
                         <input type="text" id="areaName" placeholder="e.g., Kidney, Biofilm, Lyme/Co-Infection, Thyroid">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 15px;">
                         <label for="priority">Priority</label>
                         <select id="priority">
                             <option value="High">High Priority</option>
@@ -339,7 +339,7 @@
                             <option value="Low">Low Priority</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 15px;">
                         <label>Products & Dosages</label>
                         <div id="productInputs" class="product-inputs">
                             <div class="product-input-row">
@@ -349,7 +349,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addTreatment()">➕ Add Finding & Treatment</button>
+                    <button class="btn btn-primary" onclick="addTreatment()" style="margin-top: 15px;">➕ Add Finding & Treatment</button>
                 </div>
             </div>
             
@@ -359,7 +359,7 @@
                     <label for="clinicalNotes">Clinical Notes</label>
                     <textarea id="clinicalNotes" placeholder="Overall assessment, observations, patient feedback..." style="min-height: 100px;"></textarea>
                 </div>
-                <div class="form-row" style="margin-top: 15px;">
+                <div class="form-row" style="margin-top: 20px;">
                     <div class="form-group">
                         <label for="nextVisit">Next Appointment</label>
                         <input type="date" id="nextVisit">
@@ -396,7 +396,7 @@
                 <label for="editAreaName">Area of Involvement</label>
                 <input type="text" id="editAreaName">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 15px;">
                 <label for="editPriority">Priority</label>
                 <select id="editPriority">
                     <option value="High">High Priority</option>
@@ -404,12 +404,12 @@
                     <option value="Low">Low Priority</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-top: 15px;">
                 <label>Products & Dosages</label>
                 <div id="editProductInputs" class="product-inputs"></div>
-                <button type="button" class="btn btn-success" onclick="addEditProductInput()" style="margin-top: 10px;">+ Add Product</button>
+                <button type="button" class="btn btn-success" onclick="addEditProductInput()" style="margin-top: 12px;">+ Add Product</button>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <div style="display: flex; gap: 12px; margin-top: 25px;">
                 <button class="btn btn-primary" onclick="saveEdit()">Save Changes</button>
                 <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
             </div>
