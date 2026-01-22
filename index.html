@@ -44,6 +44,7 @@
             border-bottom: 1px solid #dee2e6;
             flex-wrap: wrap;
         }
+        .controls.report-mode { display: none; }
         .btn {
             padding: 12px 24px;
             border: none;
@@ -61,6 +62,10 @@
         .btn-success:hover { background: #218838; }
         .btn-danger { background: #dc3545; color: white; }
         .btn-danger:hover { background: #c82333; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-info:hover { background: #138496; }
         #content { padding: 30px; }
         .section {
             margin-bottom: 30px;
@@ -102,60 +107,91 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         textarea { resize: vertical; min-height: 100px; }
-        .findings-list { margin-top: 15px; }
-        .finding-item {
+        
+        .treatment-item {
             background: white;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
             border-left: 4px solid #667eea;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .treatment-item.priority-high { border-left-color: #dc3545; }
+        .treatment-item.priority-medium { border-left-color: #ffc107; }
+        .treatment-item.priority-low { border-left-color: #28a745; }
+        
+        .treatment-header {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
+            grid-template-columns: 2fr 1fr auto auto;
             gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
         }
-        .finding-item .detail { display: flex; flex-direction: column; }
-        .finding-item .detail-label {
+        .treatment-header h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
             font-size: 12px;
-            color: #6c757d;
             font-weight: 600;
-            margin-bottom: 3px;
         }
-        .finding-item .detail-value { font-size: 14px; color: #212529; }
-        .remove-btn {
-            background: #dc3545;
-            color: white;
+        .priority-badge.high { background: #ffebee; color: #c62828; }
+        .priority-badge.medium { background: #fff9e6; color: #f57c00; }
+        .priority-badge.low { background: #e8f5e9; color: #2e7d32; }
+        
+        .treatment-products {
+            display: grid;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .product-line {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 10px;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .product-name { font-weight: 600; color: #495057; }
+        .product-dosage { color: #6c757d; font-size: 14px; }
+        
+        .edit-btn, .delete-btn {
+            padding: 6px 12px;
             border: none;
-            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
         }
-        .remove-btn:hover { background: #c82333; }
-        .recommendation-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-            border-left: 4px solid #28a745;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .recommendation-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
-            gap: 15px;
-        }
-        .add-finding-form, .add-recommendation-form {
+        .edit-btn { background: #17a2b8; color: white; }
+        .edit-btn:hover { background: #138496; }
+        .delete-btn { background: #dc3545; color: white; }
+        .delete-btn:hover { background: #c82333; }
+        
+        .add-treatment-form {
             background: #e8f4f8;
             padding: 20px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-top: 15px;
         }
-        .add-finding-form input, .add-finding-form select, .add-finding-form textarea,
-        .add-recommendation-form input, .add-recommendation-form select, .add-recommendation-form textarea {
-            background: white;
+        .add-treatment-form.report-mode { display: none; }
+        
+        .product-inputs {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 10px;
         }
+        .product-input-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 10px;
+        }
+        
         .info-banner {
             background: #d1ecf1;
             border-left: 4px solid #0c5460;
@@ -165,9 +201,6 @@
             color: #0c5460;
             font-size: 14px;
         }
-        .priority-high { border-left-color: #dc3545; }
-        .priority-medium { border-left-color: #ffc107; }
-        .priority-low { border-left-color: #28a745; }
         .visit-info {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
@@ -191,12 +224,54 @@
             height: auto;
             max-height: 80px;
         }
+        .report-banner {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        .report-banner.active { display: block; }
+        .report-banner h2 { color: #155724; margin-bottom: 10px; }
+        .report-banner p { color: #155724; font-size: 14px; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
         @media print {
             body { background: white; padding: 0; }
             .controls { display: none !important; }
+            .report-banner { display: none !important; }
             .header { background: #a8c5e0; }
             .section { page-break-inside: avoid; }
-            .add-finding-form, .add-recommendation-form { display: none !important; }
+            .add-treatment-form { display: none !important; }
+            .edit-btn, .delete-btn { display: none !important; }
         }
     </style>
 </head>
@@ -207,12 +282,20 @@
             <h1>Functional Medicine Visit</h1>
             <p>QRA Patient Notes</p>
         </div>
-        <div class="controls">
+        
+        <div class="report-banner" id="reportBanner">
+            <h2>📋 Report Mode Active</h2>
+            <p>This is now a clean report ready to share with patients or doctors. Click "Back to Edit" to make changes.</p>
+        </div>
+        
+        <div class="controls" id="controls">
+            <button class="btn btn-warning" onclick="generateReport()">📋 Generate Report</button>
             <button class="btn btn-primary" onclick="downloadPDF()">📄 Download PDF</button>
             <button class="btn btn-secondary" onclick="saveToLocal()">💾 Save Draft</button>
             <button class="btn btn-success" onclick="loadFromLocal()">📂 Load Draft</button>
             <button class="btn btn-danger" onclick="clearForm()">🗑️ Clear Form</button>
         </div>
+        
         <div id="content">
             <div class="section">
                 <h2 class="section-title">Patient Information</h2>
@@ -228,153 +311,66 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="visitNumber">Visit Number</label>
-                        <input type="number" id="visitNumber" placeholder="e.g., 2" min="1">
+                        <label for="chiefComplaint">Chief Complaint</label>
+                        <textarea id="chiefComplaint" placeholder="e.g., Inflammation, Toxicity, Infection..." style="min-height: 80px;"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="visitType">Visit Type</label>
-                        <select id="visitType">
-                            <option value="Initial Consultation">Initial Consultation</option>
-                            <option value="Follow-up QRA" selected>Follow-up QRA</option>
-                            <option value="Re-evaluation">Re-evaluation</option>
-                            <option value="Maintenance">Maintenance</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="chiefComplaint">Chief Complaint / Focus</label>
-                    <textarea id="chiefComplaint" placeholder="Primary concerns or symptoms discussed today..."></textarea>
                 </div>
             </div>
+            
             <div class="section">
-                <h2 class="section-title">Current Treatment Phase</h2>
-                <div class="visit-info">
-                    <strong>Note:</strong> Drainage pathways typically require 2-4 months to establish properly before other treatments can be effective.
+                <h2 class="section-title">QRA Findings & Treatment</h2>
+                <div class="info-banner">
+                    Add areas of involvement (organs, infections, etc.) with their supplement support and dosages. Click Edit to change priority or dosing anytime.
                 </div>
-                <div class="form-row">
+                
+                <div id="treatmentsList"></div>
+                
+                <div class="add-treatment-form" id="addTreatmentForm">
+                    <h3 style="margin-bottom: 15px; color: #2c3e50; font-size: 16px;">Add Finding & Treatment</h3>
                     <div class="form-group">
-                        <label for="treatmentPhase">Phase</label>
-                        <select id="treatmentPhase">
-                            <option value="Phase 1: Drainage">Phase 1: Drainage Foundation (Lymph Support)</option>
-                            <option value="Phase 2: Detoxification">Phase 2: Detoxification (Targeted)</option>
-                            <option value="Phase 3: Restoration">Phase 3: Restoration & Support</option>
-                            <option value="Phase 4: Maintenance">Phase 4: Maintenance</option>
+                        <label for="areaName">Area of Involvement / Finding *</label>
+                        <input type="text" id="areaName" placeholder="e.g., Kidney, Biofilm, Lyme/Co-Infection, Thyroid">
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select id="priority">
+                            <option value="High">High Priority</option>
+                            <option value="Medium" selected>Medium Priority</option>
+                            <option value="Low">Low Priority</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="phaseWeeks">Weeks in Current Phase</label>
-                        <input type="number" id="phaseWeeks" placeholder="0" min="0">
+                        <label>Products & Dosages</label>
+                        <div id="productInputs" class="product-inputs">
+                            <div class="product-input-row">
+                                <input type="text" placeholder="Product name (e.g., Berberine Intrinsic)" class="product-name-input">
+                                <input type="text" placeholder="Dosage (e.g., 2 full droppers per day)" class="product-dosage-input">
+                                <button type="button" class="btn btn-success" onclick="addProductInput()">+</button>
+                            </div>
+                        </div>
                     </div>
+                    <button class="btn btn-primary" onclick="addTreatment()">➕ Add Finding & Treatment</button>
                 </div>
             </div>
+            
             <div class="section">
-                <h2 class="section-title">QRA Examination Findings</h2>
-                <div class="info-banner">Document organs, glands, and areas tested during the QRA/muscle testing examination.</div>
-                <div id="findingsList" class="findings-list"></div>
-                <div class="add-finding-form">
-                    <h3 style="margin-bottom: 15px; color: #2c3e50; font-size: 16px;">Add Finding</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="findingArea">Organ/Area Tested *</label>
-                            <input type="text" id="findingArea" placeholder="e.g., Liver, Thyroid, Lymph">
-                        </div>
-                        <div class="form-group">
-                            <label for="findingResult">Test Result</label>
-                            <select id="findingResult">
-                                <option value="Weak">Weak</option>
-                                <option value="Strong">Strong</option>
-                                <option value="Switching">Switching</option>
-                                <option value="Needs Support">Needs Support</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="findingPriority">Priority</label>
-                            <select id="findingPriority">
-                                <option value="High">High Priority</option>
-                                <option value="Medium" selected>Medium Priority</option>
-                                <option value="Low">Low Priority</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="findingNotes">Notes</label>
-                        <textarea id="findingNotes" placeholder="Additional observations..." style="min-height: 60px;"></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="addFinding()">➕ Add Finding</button>
-                </div>
-            </div>
-            <div class="section">
-                <h2 class="section-title">Product Recommendations</h2>
-                <div class="info-banner">List remedies and supplements recommended based on QRA findings.</div>
-                <div id="recommendationsList" class="findings-list"></div>
-                <div class="add-recommendation-form">
-                    <h3 style="margin-bottom: 15px; color: #2c3e50; font-size: 16px;">Add Recommendation</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="productName">Product Name *</label>
-                            <input type="text" id="productName" placeholder="e.g., Lymph 1">
-                        </div>
-                        <div class="form-group">
-                            <label for="productType">Product Type</label>
-                            <select id="productType">
-                                <option value="Detoxifier">Detoxifier (-Tox)</option>
-                                <option value="Matrix">Matrix Nutritional</option>
-                                <option value="Botanical">BioPhotonic Botanical</option>
-                                <option value="Sarcode">Sarcode</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="productDosage">Dosage</label>
-                            <input type="text" id="productDosage" placeholder="e.g., 10 drops">
-                        </div>
-                        <div class="form-group">
-                            <label for="productFrequency">Frequency</label>
-                            <input type="text" id="productFrequency" placeholder="e.g., 3x daily">
-                        </div>
-                        <div class="form-group">
-                            <label for="productDuration">Duration</label>
-                            <input type="text" id="productDuration" placeholder="e.g., 1 month">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="productNotes">Instructions/Notes</label>
-                        <textarea id="productNotes" placeholder="Special instructions..." style="min-height: 60px;"></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="addRecommendation()">➕ Add Recommendation</button>
-                </div>
-            </div>
-            <div class="section">
-                <h2 class="section-title">Clinical Notes & Observations</h2>
+                <h2 class="section-title">Clinical Notes & Follow-up</h2>
                 <div class="form-group">
-                    <label for="clinicalNotes">Notes</label>
-                    <textarea id="clinicalNotes" placeholder="Overall assessment, treatment response..." style="min-height: 120px;"></textarea>
+                    <label for="clinicalNotes">Clinical Notes</label>
+                    <textarea id="clinicalNotes" placeholder="Overall assessment, observations, patient feedback..." style="min-height: 100px;"></textarea>
                 </div>
-            </div>
-            <div class="section">
-                <h2 class="section-title">Follow-up Plan</h2>
-                <div class="form-row">
+                <div class="form-row" style="margin-top: 15px;">
                     <div class="form-group">
                         <label for="nextVisit">Next Appointment</label>
                         <input type="date" id="nextVisit">
                     </div>
                     <div class="form-group">
-                        <label for="followupType">Follow-up Type</label>
-                        <select id="followupType">
-                            <option value="QRA Re-test">QRA Re-test</option>
-                            <option value="Lab Review">Lab Review</option>
-                            <option value="Progress Check">Progress Check</option>
-                            <option value="Phase Transition">Phase Transition</option>
-                        </select>
+                        <label for="followupNotes">Follow-up Instructions</label>
+                        <input type="text" id="followupNotes" placeholder="e.g., Re-test in 4 weeks">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="followupNotes">Follow-up Instructions</label>
-                    <textarea id="followupNotes" placeholder="What should the patient do before next visit?..." style="min-height: 80px;"></textarea>
-                </div>
             </div>
+            
             <div class="section">
                 <div class="form-row">
                     <div class="form-group">
@@ -391,118 +387,261 @@
             </div>
         </div>
     </div>
+    
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-header">Edit Finding & Treatment</h2>
+            <div class="form-group">
+                <label for="editAreaName">Area of Involvement</label>
+                <input type="text" id="editAreaName">
+            </div>
+            <div class="form-group">
+                <label for="editPriority">Priority</label>
+                <select id="editPriority">
+                    <option value="High">High Priority</option>
+                    <option value="Medium">Medium Priority</option>
+                    <option value="Low">Low Priority</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Products & Dosages</label>
+                <div id="editProductInputs" class="product-inputs"></div>
+                <button type="button" class="btn btn-success" onclick="addEditProductInput()" style="margin-top: 10px;">+ Add Product</button>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="saveEdit()">Save Changes</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         document.getElementById('visitDate').valueAsDate = new Date();
-        let findings = [];
-        let recommendations = [];
+        let treatments = [];
+        let isReportMode = false;
+        let editingIndex = -1;
         
-        function addFinding() {
-            const area = document.getElementById('findingArea').value.trim();
-            if (!area) { alert('Please enter an organ/area'); return; }
-            findings.push({
-                area: area,
-                result: document.getElementById('findingResult').value,
-                priority: document.getElementById('findingPriority').value,
-                notes: document.getElementById('findingNotes').value.trim()
-            });
-            renderFindings();
-            document.getElementById('findingArea').value = '';
-            document.getElementById('findingNotes').value = '';
+        function addProductInput() {
+            const container = document.getElementById('productInputs');
+            const row = document.createElement('div');
+            row.className = 'product-input-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Product name" class="product-name-input">
+                <input type="text" placeholder="Dosage" class="product-dosage-input">
+                <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(row);
         }
         
-        function renderFindings() {
-            const container = document.getElementById('findingsList');
+        function addEditProductInput() {
+            const container = document.getElementById('editProductInputs');
+            const row = document.createElement('div');
+            row.className = 'product-input-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Product name" class="product-name-input">
+                <input type="text" placeholder="Dosage" class="product-dosage-input">
+                <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">×</button>
+            `;
+            container.appendChild(row);
+        }
+        
+        function addTreatment() {
+            const area = document.getElementById('areaName').value.trim();
+            const priority = document.getElementById('priority').value;
+            
+            if (!area) {
+                alert('Please enter an area of involvement');
+                return;
+            }
+            
+            const productRows = document.querySelectorAll('#productInputs .product-input-row');
+            const products = [];
+            productRows.forEach(row => {
+                const name = row.querySelector('.product-name-input').value.trim();
+                const dosage = row.querySelector('.product-dosage-input').value.trim();
+                if (name) {
+                    products.push({ name, dosage });
+                }
+            });
+            
+            if (products.length === 0) {
+                alert('Please add at least one product');
+                return;
+            }
+            
+            treatments.push({ area, priority, products });
+            renderTreatments();
+            
+            // Clear form
+            document.getElementById('areaName').value = '';
+            document.getElementById('priority').value = 'Medium';
+            document.getElementById('productInputs').innerHTML = `
+                <div class="product-input-row">
+                    <input type="text" placeholder="Product name" class="product-name-input">
+                    <input type="text" placeholder="Dosage" class="product-dosage-input">
+                    <button type="button" class="btn btn-success" onclick="addProductInput()">+</button>
+                </div>
+            `;
+        }
+        
+        function renderTreatments() {
+            const container = document.getElementById('treatmentsList');
             container.innerHTML = '';
-            findings.forEach((f, i) => {
+            
+            treatments.forEach((t, i) => {
                 const div = document.createElement('div');
-                div.className = `finding-item priority-${f.priority.toLowerCase()}`;
+                div.className = `treatment-item priority-${t.priority.toLowerCase()}`;
+                
+                let productsHtml = '';
+                t.products.forEach(p => {
+                    productsHtml += `
+                        <div class="product-line">
+                            <span class="product-name">${p.name}</span>
+                            <span class="product-dosage">${p.dosage || 'As directed'}</span>
+                        </div>
+                    `;
+                });
+                
                 div.innerHTML = `
-                    <div class="detail">
-                        <div class="detail-label">Organ/Area</div>
-                        <div class="detail-value"><strong>${f.area}</strong></div>
-                        ${f.notes ? `<div style="margin-top:8px;font-size:13px;color:#6c757d">${f.notes}</div>` : ''}
+                    <div class="treatment-header">
+                        <h3>${t.area}</h3>
+                        <span class="priority-badge ${t.priority.toLowerCase()}">${t.priority}</span>
+                        <button class="edit-btn" onclick="openEditModal(${i})" style="${isReportMode ? 'display:none' : ''}">Edit</button>
+                        <button class="delete-btn" onclick="deleteTreatment(${i})" style="${isReportMode ? 'display:none' : ''}">Delete</button>
                     </div>
-                    <div class="detail">
-                        <div class="detail-label">Result</div>
-                        <div class="detail-value">${f.result}</div>
+                    <div class="treatment-products">
+                        ${productsHtml}
                     </div>
-                    <div class="detail">
-                        <div class="detail-label">Priority</div>
-                        <div class="detail-value">${f.priority}</div>
-                    </div>
-                    <button class="remove-btn" onclick="removeFinding(${i})">Remove</button>
                 `;
+                
                 container.appendChild(div);
             });
         }
         
-        function removeFinding(i) { findings.splice(i, 1); renderFindings(); }
-        
-        function addRecommendation() {
-            const name = document.getElementById('productName').value.trim();
-            if (!name) { alert('Please enter a product name'); return; }
-            recommendations.push({
-                name: name,
-                type: document.getElementById('productType').value,
-                dosage: document.getElementById('productDosage').value.trim(),
-                frequency: document.getElementById('productFrequency').value.trim(),
-                duration: document.getElementById('productDuration').value.trim(),
-                notes: document.getElementById('productNotes').value.trim()
-            });
-            renderRecommendations();
-            document.getElementById('productName').value = '';
-            document.getElementById('productDosage').value = '';
-            document.getElementById('productFrequency').value = '';
-            document.getElementById('productDuration').value = '';
-            document.getElementById('productNotes').value = '';
-        }
-        
-        function renderRecommendations() {
-            const container = document.getElementById('recommendationsList');
+        function openEditModal(index) {
+            editingIndex = index;
+            const t = treatments[index];
+            
+            document.getElementById('editAreaName').value = t.area;
+            document.getElementById('editPriority').value = t.priority;
+            
+            const container = document.getElementById('editProductInputs');
             container.innerHTML = '';
-            recommendations.forEach((r, i) => {
-                const div = document.createElement('div');
-                div.className = 'recommendation-item';
-                div.innerHTML = `
-                    <div class="recommendation-grid">
-                        <div class="detail">
-                            <div class="detail-label">Product</div>
-                            <div class="detail-value"><strong>${r.name}</strong></div>
-                            <div style="margin-top:4px;font-size:12px;color:#6c757d">${r.type}</div>
-                            ${r.notes ? `<div style="margin-top:8px;font-size:13px">${r.notes}</div>` : ''}
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label">Dosage</div>
-                            <div class="detail-value">${r.dosage || 'As directed'}</div>
-                        </div>
-                        <div class="detail">
-                            <div class="detail-label">Frequency</div>
-                            <div class="detail-value">${r.frequency || 'As directed'}</div>
-                            ${r.duration ? `<div style="margin-top:4px;font-size:12px;color:#6c757d">Duration: ${r.duration}</div>` : ''}
-                        </div>
-                        <button class="remove-btn" onclick="removeRecommendation(${i})">Remove</button>
-                    </div>
+            t.products.forEach(p => {
+                const row = document.createElement('div');
+                row.className = 'product-input-row';
+                row.innerHTML = `
+                    <input type="text" placeholder="Product name" class="product-name-input" value="${p.name}">
+                    <input type="text" placeholder="Dosage" class="product-dosage-input" value="${p.dosage}">
+                    <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">×</button>
                 `;
-                container.appendChild(div);
+                container.appendChild(row);
             });
+            
+            document.getElementById('editModal').classList.add('active');
         }
         
-        function removeRecommendation(i) { recommendations.splice(i, 1); renderRecommendations(); }
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            editingIndex = -1;
+        }
+        
+        function saveEdit() {
+            if (editingIndex < 0) return;
+            
+            const area = document.getElementById('editAreaName').value.trim();
+            const priority = document.getElementById('editPriority').value;
+            
+            if (!area) {
+                alert('Please enter an area of involvement');
+                return;
+            }
+            
+            const productRows = document.querySelectorAll('#editProductInputs .product-input-row');
+            const products = [];
+            productRows.forEach(row => {
+                const name = row.querySelector('.product-name-input').value.trim();
+                const dosage = row.querySelector('.product-dosage-input').value.trim();
+                if (name) {
+                    products.push({ name, dosage });
+                }
+            });
+            
+            if (products.length === 0) {
+                alert('Please add at least one product');
+                return;
+            }
+            
+            treatments[editingIndex] = { area, priority, products };
+            renderTreatments();
+            closeEditModal();
+        }
+        
+        function deleteTreatment(index) {
+            if (confirm('Delete this finding and treatment?')) {
+                treatments.splice(index, 1);
+                renderTreatments();
+            }
+        }
+        
+        function generateReport() {
+            isReportMode = !isReportMode;
+            
+            const controls = document.getElementById('controls');
+            const reportBanner = document.getElementById('reportBanner');
+            const addForm = document.getElementById('addTreatmentForm');
+            
+            if (isReportMode) {
+                controls.classList.add('report-mode');
+                reportBanner.classList.add('active');
+                addForm.classList.add('report-mode');
+                
+                document.querySelectorAll('input, select, textarea').forEach(el => {
+                    el.setAttribute('readonly', 'true');
+                    el.style.pointerEvents = 'none';
+                    el.style.backgroundColor = '#f8f9fa';
+                });
+                
+                controls.innerHTML = `
+                    <button class="btn btn-success" onclick="generateReport()">✏️ Back to Edit</button>
+                    <button class="btn btn-primary" onclick="downloadPDF()">📄 Download PDF</button>
+                    <button class="btn btn-secondary" onclick="window.print()">🖨️ Print</button>
+                `;
+                controls.classList.remove('report-mode');
+                
+                renderTreatments();
+            } else {
+                controls.classList.remove('report-mode');
+                reportBanner.classList.remove('active');
+                addForm.classList.remove('report-mode');
+                
+                document.querySelectorAll('input, select, textarea').forEach(el => {
+                    el.removeAttribute('readonly');
+                    el.style.pointerEvents = 'auto';
+                    el.style.backgroundColor = '';
+                });
+                
+                controls.innerHTML = `
+                    <button class="btn btn-warning" onclick="generateReport()">📋 Generate Report</button>
+                    <button class="btn btn-primary" onclick="downloadPDF()">📄 Download PDF</button>
+                    <button class="btn btn-secondary" onclick="saveToLocal()">💾 Save Draft</button>
+                    <button class="btn btn-success" onclick="loadFromLocal()">📂 Load Draft</button>
+                    <button class="btn btn-danger" onclick="clearForm()">🗑️ Clear Form</button>
+                `;
+                
+                renderTreatments();
+            }
+        }
         
         function saveToLocal() {
             localStorage.setItem('qraPatientNotes', JSON.stringify({
                 patientName: document.getElementById('patientName').value,
                 visitDate: document.getElementById('visitDate').value,
-                visitNumber: document.getElementById('visitNumber').value,
-                visitType: document.getElementById('visitType').value,
                 chiefComplaint: document.getElementById('chiefComplaint').value,
-                treatmentPhase: document.getElementById('treatmentPhase').value,
-                phaseWeeks: document.getElementById('phaseWeeks').value,
-                findings: findings,
-                recommendations: recommendations,
+                treatments: treatments,
                 clinicalNotes: document.getElementById('clinicalNotes').value,
                 nextVisit: document.getElementById('nextVisit').value,
-                followupType: document.getElementById('followupType').value,
                 followupNotes: document.getElementById('followupNotes').value,
                 practitionerName: document.getElementById('practitionerName').value
             }));
@@ -515,33 +654,24 @@
             const p = JSON.parse(data);
             document.getElementById('patientName').value = p.patientName || '';
             document.getElementById('visitDate').value = p.visitDate || '';
-            document.getElementById('visitNumber').value = p.visitNumber || '';
-            document.getElementById('visitType').value = p.visitType || '';
             document.getElementById('chiefComplaint').value = p.chiefComplaint || '';
-            document.getElementById('treatmentPhase').value = p.treatmentPhase || '';
-            document.getElementById('phaseWeeks').value = p.phaseWeeks || '';
             document.getElementById('clinicalNotes').value = p.clinicalNotes || '';
             document.getElementById('nextVisit').value = p.nextVisit || '';
-            document.getElementById('followupType').value = p.followupType || '';
             document.getElementById('followupNotes').value = p.followupNotes || '';
             document.getElementById('practitionerName').value = p.practitionerName || '';
-            findings = p.findings || [];
-            recommendations = p.recommendations || [];
-            renderFindings();
-            renderRecommendations();
+            treatments = p.treatments || [];
+            renderTreatments();
             alert('✓ Draft loaded!');
         }
         
         function clearForm() {
             if (!confirm('Clear all fields?')) return;
-            document.querySelectorAll('input[type="text"], input[type="date"], input[type="number"], textarea, select').forEach(input => {
+            document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(input => {
                 if (input.id !== 'practitionerName') input.value = '';
             });
             document.getElementById('visitDate').valueAsDate = new Date();
-            findings = [];
-            recommendations = [];
-            renderFindings();
-            renderRecommendations();
+            treatments = [];
+            renderTreatments();
         }
         
         function downloadPDF() {
